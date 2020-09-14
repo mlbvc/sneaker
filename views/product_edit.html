@@ -1,0 +1,103 @@
+{{ extend './layout.html' }}
+{{ block 'content'}}
+<form id="product_form" method="POST">
+<!-- <form action="/product/edit" method="POST" enctype="multipart/form-data"> -->
+  <input type="hidden" value="{{product.id}}" name="id">
+  <div class="form-group">
+    <label class="control-label">id</label>
+    <input type="text" class="form-control" value="{{product.product_id}}"
+      name="product_id" id="product_id" />
+  </div>
+  <div class="form-group">
+    <label class="control-label">商品名</label>
+    <input type="text" class="form-control" value="{{product.product_name}}"
+      name="product_name" id="product_name" />
+  </div>
+  <div class="form-group">
+    <label class="control-label">分类id</label>
+    <input type="text" class="form-control" value="{{product.category}}"
+      name="category" id="category" />
+  </div>
+  <div class="form-group">
+    <label class="control-label">数量</label>
+    <input type="text" class="form-control" value="{{product.number}}"
+      name="number" id="number" />
+  </div>
+  <div class="form-group">
+    <label class="control-label">价格</label>
+    <input type="text" class="form-control" value="{{product.price}}"
+      name="price" id="price" />
+  </div>
+  <!-- <div class="form-group">
+    更换图片：
+    <input type="file" accept="image/png,image/jpg" id="picture" name="picture" onchange="upload()">
+    <img id="img" src="{{product.picture}}" width="200" height="200" />
+  </div> -->
+  <div class="form-group">
+    <label class="control-label">颜色</label>
+    <input type="text" class="form-control" value="{{product.color}}"
+      name="color" id="color" />
+  </div>
+  <div class="form-group">
+    <label class="control-label">简介</label>
+    <input type="text" class="form-control" value="{{product.introduction}}"
+      name="introduction" id="introduction" height="120"/>
+  </div>
+  <div class="form-group">
+    <label class="control-label">描述</label>
+    <input class="form-control" value="{{product.description}}"
+      name="description" id="description" height="200" />
+  </div>
+  <div class="form-group">
+    <label class="control-label">是否上架：</label>
+    {{ if product.is_on_the_shelf === 1}}
+      是  <input type="radio" name="is_on_the_shelf" id="onsell" value="1" checked />
+      否  <input type="radio" name="is_on_the_shelf" id="offself" value="0" />
+    {{ else }}
+      是  <input type="radio" name="is_on_the_shelf" id="onsell" value="1" />
+      否  <input type="radio" name="is_on_the_shelf" id="offself" value="0" checked />
+    {{ /if }}
+  </div>
+  <button id="editBtn" class="btn btn-default" type="submit">保存</button>
+</form>
+{{ /block }}
+{{ block 'jscontent'}}
+<script>
+  $('#editBtn').on('click', function (e) {
+      e.preventDefault();
+      // let formData = $('#product_form').serialize();
+      let formData=new FormData($("#product_form")[0]);
+      $.ajax({
+        url: '/product/edit',
+        type: 'post',
+        data: formData,
+        dataType: 'json',
+        // async: false,  
+        // cache: false,  
+        processData: false,
+        contentType: false,
+        success: function(data){
+          if(data.code === 1101){
+            window.location.href = '/product'
+          }
+        }
+      })
+  })
+
+  function upload() {
+    var file = document.getElementById('picture').files[0];
+    if (file) {
+      var reader = new FileReader();
+      reader.onload = function (event) {
+        var txt = event.target.result;
+        var img = document.getElementById("img");
+        img.src = txt;
+        img.setAttribute('src', txt)
+        img.setAttribute('width', 200);
+        img.setAttribute('height', 200);
+      };
+    }
+    reader.readAsDataURL(file);
+  }
+</script>
+{{ /block }}

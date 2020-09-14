@@ -1,0 +1,83 @@
+{{ extend './layout.html' }}
+{{ block 'content'}}
+<h2 class="sub-header">商品列表</h2>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>商品名</th>
+        <th>分类id</th>
+        <th>价格</th>
+        <th>数量</th>
+        <th>图片</th>
+        <th>颜色</th>
+        <th>简介</th>
+        <th>描述</th>
+        <th>是否上架</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{each product && product}}
+      <tr>
+        <td>{{$value.product_id}}</td>
+        <td>{{$value.product_name}}</td>
+        <td>{{$value.category}}</td>
+        <td>{{$value.price}}</td>
+        <td>{{$value.number}}</td>
+        <td><img src="{{$value.picture}}" width="200" height="200"></td>
+        <th>{{$value.color}}</th>
+        <th>{{$value.introduction}}</th>
+        <th>{{$value.description}}</th>
+        <td>{{$value.is_on_the_shelf == 1? '是':'否'}}</td>
+        <td>
+          <button >编辑</button>
+          <button >删除</button>
+          <!-- <a href="/product/edit?id={{$value.id}}">编辑</a>
+          <a href="/product/delete?id={{$value.id}}&picture={{$value.picture}}">删除</a> -->
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+  <nav aria-label="Page navigation">
+    <ul class="pagination">
+      {{if pageNum === 1}}
+      {{else}}
+      <li>
+        <a href="/product?pageNum={{pageNum - 1}}" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      {{/if}}
+
+      {{each maxPage && maxPage}}
+        {{if $index + 1 === pageNum}}
+        <li class="active"><a href="/product?pageNum={{$index + 1}}">{{$index + 1}}</a></li>
+        {{else}}
+        <li><a href="/product?pageNum={{$index + 1}}">{{$index + 1}}</a></li>
+        {{/if}}
+      {{/each}}
+
+      {{if pageNum === maxPage.length}}
+      {{else}}
+      <li>
+        <a href="/product?pageNum={{pageNum + 1}}" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+      {{/if}}
+    </ul>
+  </nav>
+  <a href="/product/add" class="btn btn-large btn-primary" type="submit">添加商品</a>
+</div>
+{{ /block }}
+{{ block 'jscontent'}}
+<script>
+  $(document).ready(function(){
+    $('#layout_page').removeClass('active');
+    $('#product_page').addClass("active");
+  })
+</script>
+{{ /block}}

@@ -1,0 +1,35 @@
+{{ extend './layout.html' }}
+{{ block 'content'}}
+<form id="parent_form">
+  <div class="form-group">
+    <label class="control-label" for="inputWarning">父类id</label>
+    <input type="text" class="form-control" placeholder="请输入id" name="parent_id" id="parent_id">
+  </div>
+  <div class="form-group">
+    <label class="control-label" for="inputWarning">父类名称</label>
+    <input type="text" class="form-control" placeholder="请输入id" name="parent_name" id="parent_name">
+  </div>
+  <button id="btn" class="btn btn-default" type="submit">添加</button>
+</form>
+{{ /block }}
+
+{{ block 'jscontent'}}
+<script>
+  $('#btn').on('click', function (e) {
+      e.preventDefault();
+      let formData = $('#parent_form').serialize();
+      console.log(11111, formData)
+      $.ajax({
+        url: '/parent/add',
+        type: 'post',
+        data: formData,
+        dataType: 'json',
+        success: function(data){
+          if(data.code === 1300){
+            window.location.href = '/parent'
+          }
+        }
+      })
+  })
+</script>
+{{ /block }}

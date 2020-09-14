@@ -1,0 +1,40 @@
+{{extend './layout.html'}}
+{{block 'content'}}
+<h2 class="sub-header">分类列表</h2>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>分类id</th>
+        <th>分类名</th>
+        <th>父类id</th>
+        <th>父类名称</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{each category && category}}
+      <tr>
+        <td>{{$value.category_id}}</td>
+        <td>{{$value.category_name}}</td>
+        <td>{{$value.parent}}</td>
+        <td>{{$value.parent_name}}</td>
+        <td>
+          <a href="/category/edit?id={{$value.id}}">编辑</a>
+          <a href="/category/delete?id={{$value.id}}">删除</a>
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+  <a href="/category/add" class="btn btn-large btn-primary" type="submit">添加分类</a>
+</div>
+{{/block}}
+{{block 'jscontent'}}
+<script>
+  $(document).ready(function(){
+    $('#layout_page').removeClass('active');
+    $('#category_page').addClass("active");
+  })
+</script>
+{{/block}}

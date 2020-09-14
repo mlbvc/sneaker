@@ -1,0 +1,96 @@
+{{ extend './layout.html' }}
+{{ block 'content'}}
+<form id="product_form" method="POST" enctype="multipart/form-data">
+<!-- <form action="/product/add" method="POST" enctype="multipart/form-data"> -->
+  <div class="form-group">
+    <label class="control-label" for="inputWarning">id</label>
+    <input type="text" class="form-control" placeholder="请输入id" name="product_id" id="product_id" />
+  </div>
+  <div class="form-group">
+    <label class="control-label" for="inputWarning">商品名</label>
+    <input type="text" class="form-control" placeholder="请输入商品名" name="product_name" id="product_name" />
+  </div>
+  <div class="form-group">
+    <label class="control-label" for="inputWarning">分类id</label>
+    <input type="text" class="form-control" placeholder="请输入分类id" name="category" id="category" />
+  </div>
+  <div class="form-group">
+    <label class="control-label" for="inputWarning">数量</label>
+    <input type="text" class="form-control" placeholder="请输入数量" name="number" id="number" />
+  </div>
+  <div class="form-group">
+    <label class="control-label" for="inputWarning">价格</label>
+    <input type="text" class="form-control" placeholder="请输入价格" name="price" id="price" />
+  </div>
+  <div class="form-group">
+    <label class="control-label" for="inputWarning">颜色</label>
+    <input type="text" class="form-control" placeholder="请输入颜色" name="color" id="color" />
+  </div>
+  <div class="form-group">
+    <label class="control-label" for="inputWarning">简介</label>
+    <input type="text" class="form-control" placeholder="请输入简介" name="introduction" id="introduction" />
+  </div>
+  <div class="form-group">
+    <label class="control-label" for="inputWarning">描述</label>
+    <input class="form-control" placeholder="请输入描述" name="description" id="description" />
+  </div>
+  <div class="form-group">
+    <label class="control-label" for="inputWarning">是否上架：</label>
+    是 <input type="radio" name="is_on_the_shelf" id="onsell" value="1">
+    否 <input type="radio" name="is_on_the_shelf" id="offself" value="0">
+  </div>
+  <div class="form-group">
+    上传图片：
+    <!-- accept="image/png,image/jpg" -->
+    <input type="file" id="picture" name="picture" onchange="upload()" />
+    <img id="img"/>
+  </div>
+  <button id="addBtn" class="btn btn-default" type="submit">添加</button>
+</form>
+{{ /block }}
+
+{{ block 'jscontent'}}
+<script>
+  $('#addBtn').on('click', function (e) {
+      e.preventDefault();
+      // let formData = $('#product_form').serialize();
+      let file = document.getElementById("picture").files[0]; 
+      let formData=new FormData($("#product_form")[0]);
+      console.log($("#product_form"))
+      if(file){
+        formData.append("file", file, file.name);
+      }
+      console.log(file,formData)
+      $.ajax({
+        url: '/product/add',
+        type: 'post',
+        data: formData,
+        dataType: 'json',
+        // async: false,  
+        // cache: false,  
+        processData: false,
+        contentType: false,
+        success: function(data){
+          if(data.code === 1100){
+            window.location.href = '/product'
+          }
+        }
+      })
+  })
+  function upload() {
+    var file = document.getElementById('picture').files[0];
+    if (file) {
+      var reader = new FileReader();
+      reader.onload = function (event) {
+        var txt = event.target.result;
+        var img = document.getElementById("img");
+        img.src = txt;
+        img.setAttribute('src', txt)
+        img.setAttribute('width', 200);
+        img.setAttribute('height', 200);
+      };
+    }
+    reader.readAsDataURL(file);
+  }
+</script>
+{{ /block }}

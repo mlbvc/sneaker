@@ -1,0 +1,40 @@
+.main{
+    margin: 0 auto;
+    border: 1px solid gray;
+    border-radius: 10px;
+    width: 400px;
+    height: 400px;
+    position:absolute;
+    left:50%;
+    top:50%;
+    margin-left:-200px;
+    margin-top:-200px;
+}
+.form{
+    width: 400px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+}
+.form-title{
+    margin:20px 0;
+}
+.form div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.form input{
+    text-align: center;
+    vertical-align: middle
+}
+.input-group{
+    width: 350px;
+    margin-left: 20px;
+    margin-top:20px;
+}
+.btn{
+    margin-left: 20px;
+    width: 350px;
+    margin-top: 20px;
+}

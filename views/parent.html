@@ -1,0 +1,36 @@
+{{extend './layout.html'}}
+{{block 'content'}}
+<h2 class="sub-header">父类列表</h2>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>父类id</th>
+        <th>分类名</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{each parent && parent}}
+      <tr>
+        <td>{{$value.parent_id}}</td>
+        <td>{{$value.parent_name}}</td>
+        <td>
+          <a href="/parent/edit?id={{$value.id}}">编辑</a>
+          <a href="/parent/delete?id={{$value.id}}">删除</a>
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+  <a href="/parent/add" class="btn btn-large btn-primary" type="submit">添加分类</a>
+</div>
+{{/block}}
+{{block 'jscontent'}}
+<script>
+  $(document).ready(function(){
+    $('#layout_page').removeClass('active');
+    $('#parent_page').addClass("active");
+  })
+</script>
+{{/block}}

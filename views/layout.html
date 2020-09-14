@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../public/css/dashboard.css">
+  <title>后台</title>
+</head>
+
+<body>
+  {{include './nav.html'}}
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-3 col-md-2 sidebar">
+        <ul class="nav nav-sidebar">
+          <li id="layout_page" class="active"><a href="/">首页 <span class="sr-only">(current)</span></a></li>
+          <li id="product_page"><a href="/product">商品列表</a></li>
+          <li id="category_page"><a href="/category">分类列表</a></li>
+          <li id="parent_page"><a href="/parent">父类列表</a></li>
+        </ul>
+        <ul class="nav nav-sidebar">
+          <li><a href="">用户管理</a></li>
+          <li><a href="">订单管理</a></li>
+          <li><a href="">其他</a></li>
+        </ul>
+        <ul class="nav nav-sidebar">
+        </ul>
+      </div>
+    </div>
+  </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        {{block 'content'}}
+        这是首页
+        {{/block}}
+      </div>
+    </div>
+  </div>
+</body>
+</body>
+
+</html>
+<script src="../node_modules/jquery/dist/jquery.js"></script>
+<script src="../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+{{block 'jscontent'}}
+
+{{/block}}
